@@ -13,7 +13,7 @@ def send_request(api_key, payload, spinner_text):
             "https://api.openai.com/v1/chat/completions",
             headers=headers,
             json=payload,
-        )
+        timeout=60)
         response.raise_for_status()
         json_response = response.json()
         review_summary = (
