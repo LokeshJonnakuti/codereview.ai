@@ -7,6 +7,7 @@ import gitreview_gpt.formatter as formatter
 import gitreview_gpt.utils as utils
 import gitreview_gpt.request as request
 import gitreview_gpt.reviewer as reviewer
+from security import safe_command
 
 
 def get_git_diff(branch):
@@ -18,7 +19,7 @@ def get_git_diff(branch):
     else:
         command = ["git", "diff", branch, "--cached"]
 
-    git_diff = subprocess.run(command, capture_output=True, text=True)
+    git_diff = safe_command.run(subprocess.run, command, capture_output=True, text=True)
 
     return git_diff.stdout
 
@@ -165,4 +166,4 @@ def run():
 
         if user_input == "y":
             commit_command = ["git", "commit", "-m", commit_message]
-            subprocess.run(commit_command, capture_output=True, text=True)
+            safe_command.run(subprocess.run, commit_command, capture_output=True, text=True)
